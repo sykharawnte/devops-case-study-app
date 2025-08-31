@@ -82,6 +82,6 @@ The Jenkins pipeline is defined in a `Jenkinsfile` that automates the following 
 ###pipeline stages/logs
 
 ![pipeline](assets/pipeline.png)
-![output](assets/outputt.png)
+![output](assets/output1.png)
 ![dockerhub_aws_ssh_credentials](assets/dockerimage.png)
 ![dockerhub_image_pushed](assets/jenkinsdet.png)
