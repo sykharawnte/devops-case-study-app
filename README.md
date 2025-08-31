@@ -41,5 +41,5 @@ This project showcases a fully automated DevOps pipeline that builds, tests, pro
 
 # 2️⃣ Web Application UI
 
-![Web App Output](assets/outputs.png)
+![Web App Output](assets/outputt.png)
 
