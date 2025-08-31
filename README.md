@@ -35,11 +35,11 @@ This project showcases a fully automated DevOps pipeline that builds, tests, pro
 
 ## 1️⃣ Architecture Diagram
 
-![DevOps Architecture](assets/Architecturess.png)
+![DevOps Architecture](assets/architectures.png)
 
 ---
 
 # 2️⃣ Web Application UI
 
-![Web App Output](assets/output1.png)
+![Web App Output](assets/outputs.png)
 
