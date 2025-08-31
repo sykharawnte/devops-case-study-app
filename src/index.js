@@ -3,13 +3,19 @@ const os = require("os");
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => {
+// API endpoint for stats
+app.get("/stats", (req, res) => {
   const cpuLoad = os.loadavg()[0].toFixed(2);
   const totalMem = (os.totalmem() / (1024 ** 3)).toFixed(2);
   const freeMem = (os.freemem() / (1024 ** 3)).toFixed(2);
   const usedMem = (totalMem - freeMem).toFixed(2);
   const uptime = (os.uptime() / 3600).toFixed(2);
 
+  res.json({ cpuLoad, totalMem, freeMem, usedMem, uptime });
+});
+
+// Serve frontend in same file
+app.get("/", (req, res) => {
   res.send(`
     <!DOCTYPE html>
     <html lang="en">
@@ -62,18 +68,33 @@ app.get("/", (req, res) => {
     </head>
     <body>
       <div class="dashboard">
-        <h1>🖥️ System Monitoring</h1>
-        <div class="stat">CPU Load: <span>${cpuLoad}</span></div>
-        <div class="stat">Memory Used: <span>${usedMem} GB / ${totalMem} GB</span></div>
-        <div class="stat">Free Memory: <span>${freeMem} GB</span></div>
-        <div class="stat">System Uptime: <span>${uptime} hours</span></div>
+        <h1>🖥️ Live System Monitoring</h1>
+        <div class="stat">CPU Load: <span id="cpu">--</span></div>
+        <div class="stat">Memory Used: <span id="used">--</span> / <span id="total">--</span> GB</div>
+        <div class="stat">Free Memory: <span id="free">--</span> GB</div>
+        <div class="stat">System Uptime: <span id="uptime">--</span> hours</div>
         <div class="footer">Server running at http://localhost:${port}</div>
       </div>
+
+      <script>
+        async function fetchStats() {
+          const res = await fetch("/stats");
+          const data = await res.json();
+          document.getElementById("cpu").innerText = data.cpuLoad;
+          document.getElementById("used").innerText = data.usedMem;
+          document.getElementById("total").innerText = data.totalMem;
+          document.getElementById("free").innerText = data.freeMem;
+          document.getElementById("uptime").innerText = data.uptime;
+        }
+
+        fetchStats();
+        setInterval(fetchStats, 5000); // refresh every 5s
+      </script>
     </body>
     </html>
   `);
 });
 
 app.listen(port, () => {
-  console.log(`✅ Monitoring Dashboard running at http://localhost:${port}`);
+  console.log(`✅ Dashboard running at http://localhost:${port}`);
 });
