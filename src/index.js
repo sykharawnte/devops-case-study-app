@@ -69,12 +69,21 @@ app.get("/", (req, res) => {
         </div>
 
         <p>Server running at port ${port}</p>
-        <p>${new Date()}</p>
+        <h3 id="time"></h3>
+
+        <script>
+          function updateTime() {
+            const now = new Date();
+            document.getElementById("time").innerText = "⏰ " + now.toLocaleString();
+          }
+          updateTime(); // show immediately
+          setInterval(updateTime, 1000); // update every second
+        </script>
       </body>
     </html>
   `);
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`✅ Server running at http://localhost:${port}`);
 });
